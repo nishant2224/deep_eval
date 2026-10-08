@@ -31,22 +31,42 @@ DeepEval provides two complementary metrics to catch hallucinations:
 
 ---
 
-## 3. Real-World Enterprise Example
+## 3. Real-World Positive & Negative Scenarios
 
-Suppose you are testing an internal HR Support Bot:
+### A. FaithfulnessMetric (Inventing Unsupported Claims)
+* **Goal**: Verify if the LLM invents perks, rules, or features absent from company documents.
 
-### Retrieved Company Knowledge (`retrieval_context`):
-> *"Employees receive 20 days of paid annual leave. Sick leave is accrued at 1 day per month worked. Unused annual leave expires on December 31st and cannot be rolled over."*
+* **Retrieved Knowledge Context**:
+  > *"Customers can return items within 30 days of purchase for a full refund if the item is unopened and in its original box."*
 
-### Scenario 1: 100% Faithful Output (Pass)
-* **Actual Output**: *"You get 20 days of paid annual leave each year, and sick leave accumulates at 1 day per month. Any unused annual leave expires on December 31st."*
-* **Evaluation**: All claims are explicitly backed by the context. Score = `1.0`.
+* **✅ Positive Scenario (PASS - Score 1.0)**:
+  * **User Prompt**: *"Can I return my item?"*
+  * **LLM Output**: *"Yes, you can return your item within 30 days of purchase as long as it remains unopened and in the original packaging."*
+  * **Why it passes**: Every single statement is 100% grounded in the retrieved documentation.
 
-### Scenario 2: Hallucination / Unfaithful Output (Fail)
-* **Actual Output**: *"You get 20 days of paid annual leave and 1 day of sick leave per month. You can also roll over up to 5 unused leave days into the next calendar year."*
-* **Evaluation**: The rollover claim directly contradicts and invents policy details not present in the context.
-* **DeepEval Score**: `0.66` (Fail).
-* **DeepEval Reason**: *"The claim that employees can roll over up to 5 days contradicts the context which states unused leave cannot be rolled over."*
+* **❌ Negative Scenario (FAIL - Score 0.4)**:
+  * **User Prompt**: *"Can I return my item?"*
+  * **LLM Output**: *"Yes! You can return it within 30 days. Plus, we provide **free return shipping labels** and **90 days of free tech support**!"*
+  * **Why it fails**: The LLM hallucinated free return shipping and 90 days of tech support out of thin air. In enterprise systems, this causes real financial and customer trust damage.
+
+---
+
+### B. HallucinationMetric (Direct Contradictions & Untruths)
+* **Goal**: Verify if the LLM states falsehoods directly contradicting policy.
+
+* **Retrieved Knowledge Context**:
+  > *"Water damage is strictly excluded from the standard 1-year warranty coverage."*
+
+* **✅ Positive Scenario (PASS - Score 1.0)**:
+  * **User Prompt**: *"Does my warranty cover dropping my phone in a swimming pool?"*
+  * **LLM Output**: *"No, water damage is strictly excluded under the standard 1-year warranty."*
+  * **Why it passes**: Perfectly aligns with company documentation.
+
+* **❌ Negative Scenario (FAIL - Score 0.0)**:
+  * **User Prompt**: *"Does my warranty cover dropping my phone in a swimming pool?"*
+  * **LLM Output**: *"Yes, our comprehensive 1-year warranty covers all accidental liquid and water damage."*
+  * **Why it fails**: Directly contradicts the clear policy restriction.
+
 
 ---
 
