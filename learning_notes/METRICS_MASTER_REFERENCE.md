@@ -1,20 +1,20 @@
 # DeepEval Metrics Master Reference Guide
 
-> A living reference catalog of all LLM evaluation metrics in this framework. This file will be continuously updated as new modules are completed.
+> A living reference catalog of all LLM evaluation metrics in this framework. This file is continuously updated as new testing modules are added.
 
 ---
 
 ## 📊 Complete Metrics Overview Table
 
-| Day | Metric Name | Category | Required `LLMTestCase` Fields | Question It Answers | Example Failure Mode |
-| :---: | :--- | :--- | :--- | :--- | :--- |
-| **Day 1** | **`AnswerRelevancyMetric`** | Generation (LLM) | `input`, `actual_output` | *"Did the LLM directly answer the user's question without talking about unrelated topics?"* | User asks *"How do I reset my password?"*, and the bot replies with subscription pricing plans. |
-| **Day 2** | **`FaithfulnessMetric`** | Generation (LLM) | `input`, `actual_output`, `retrieval_context` | *"Are all factual claims in the answer strictly backed by the retrieved company documents?"* | Policy allows 14-day returns; bot tells the customer they have 60 days and free return shipping. |
-| **Day 2** | **`HallucinationMetric`** | Generation (LLM) | `input`, `actual_output`, `context` | *"Did the LLM directly contradict or state untruths against the reference facts?"* | Policy states water damage is excluded; bot promises full liquid damage warranty coverage. |
-| **Day 3** | **`ContextualRelevancyMetric`** | Retrieval (Search Engine) | `input`, `actual_output`, `retrieval_context` | *"How clean is the retrieved context? Does it contain excessive irrelevant noise or fluff?"* | User asks about holiday store hours; search engine also fetches the corporate cafeteria lunch menu. |
-| **Day 3** | **`ContextualRecallMetric`** | Retrieval (Search Engine) | `input`, `actual_output`, `expected_output`, `retrieval_context` | *"Did the search engine retrieve ALL the required facts from the golden ground truth?"* | Golden answer requires 30-day return policy AND 2-year warranty; search engine only fetched the return policy. |
-| **Day 3** | **`ContextualPrecisionMetric`** | Retrieval (Search Engine) | `input`, `actual_output`, `expected_output`, `retrieval_context` | *"Are the most relevant chunks ranked at the very top (Rank #1) rather than buried at the bottom?"* | The exact return drop-off address is buried at chunk #5 behind 4 generic packaging sustainability FAQs. |
-| **Day 4** | **`GEval` (Custom Rubrics)** | Custom Business Logic | Configured via `evaluation_params` (e.g. `[INPUT, ACTUAL_OUTPUT]`) | *"Does the LLM satisfy custom company Acceptance Criteria (empathy, actionability, brevity, brand voice)?"* | Angry customer complaint receives a cold, defensive reply blaming transit carriers with zero empathy. |
+| # | Metric Name | Category | Required `LLMTestCase` Fields | Question It Answers | Example Failure Mode |
+| :-: | :--- | :--- | :--- | :--- | :--- |
+| **1** | **`AnswerRelevancyMetric`** | Generation (LLM) | `input`, `actual_output` | *"Did the LLM directly answer the user's question without talking about unrelated topics?"* | User asks *"How do I reset my password?"*, and the bot replies with subscription pricing plans. |
+| **2** | **`FaithfulnessMetric`** | Generation (LLM) | `input`, `actual_output`, `retrieval_context` | *"Are all factual claims in the answer strictly backed by the retrieved company documents?"* | Policy allows 14-day returns; bot tells the customer they have 60 days and free return shipping. |
+| **3** | **`HallucinationMetric`** | Generation (LLM) | `input`, `actual_output`, `context` | *"Did the LLM directly contradict or state untruths against reference facts?"* | Policy states water damage is excluded; bot promises full liquid damage warranty coverage. |
+| **4** | **`ContextualRelevancyMetric`** | Retrieval (Search Engine) | `input`, `actual_output`, `retrieval_context` | *"How clean is the retrieved context? Does it contain excessive irrelevant noise or fluff?"* | User asks about holiday store hours; search engine also fetches the corporate cafeteria lunch menu. |
+| **5** | **`ContextualRecallMetric`** | Retrieval (Search Engine) | `input`, `actual_output`, `expected_output`, `retrieval_context` | *"Did the search engine retrieve ALL the required facts from the golden ground truth?"* | Golden answer requires 30-day return policy AND 2-year warranty; search engine only fetched the return policy. |
+| **6** | **`ContextualPrecisionMetric`** | Retrieval (Search Engine) | `input`, `actual_output`, `expected_output`, `retrieval_context` | *"Are the most relevant chunks ranked at the very top (Rank #1) rather than buried at the bottom?"* | The exact return drop-off address is buried at chunk #5 behind 4 generic packaging sustainability FAQs. |
+| **7** | **`GEval` (Custom Rubrics)** | Custom Business Logic | Configured via `evaluation_params` (e.g. `[INPUT, ACTUAL_OUTPUT]`) | *"Does the LLM satisfy custom company Acceptance Criteria (empathy, actionability, brevity, brand voice)?"* | Angry customer complaint receives a cold, defensive reply blaming transit carriers with zero empathy. |
 
 ---
 
@@ -46,7 +46,7 @@ evaluation_params = [SingleTurnParams.INPUT, SingleTurnParams.ACTUAL_OUTPUT]
 
 ## 🛠️ Detailed Metric Deep-Dives
 
-### 1. `AnswerRelevancyMetric` (Day 1)
+### 1. `AnswerRelevancyMetric`
 * **Target**: LLM Generator
 * **Threshold**: Typically `0.7` to `0.8` (Scale: 0.0 - 1.0)
 * **How It Evaluates**: Extracts statements from `actual_output` and asks if each statement is relevant to the `input`.
@@ -54,7 +54,7 @@ evaluation_params = [SingleTurnParams.INPUT, SingleTurnParams.ACTUAL_OUTPUT]
 
 ---
 
-### 2. `FaithfulnessMetric` (Day 2)
+### 2. `FaithfulnessMetric`
 * **Target**: LLM Generator (RAG)
 * **Threshold**: Typically `0.8` to `1.0`
 * **How It Evaluates**: Breaks `actual_output` into atomic claims; checks if each claim can be logically deduced from `retrieval_context`.
@@ -62,7 +62,7 @@ evaluation_params = [SingleTurnParams.INPUT, SingleTurnParams.ACTUAL_OUTPUT]
 
 ---
 
-### 3. `HallucinationMetric` (Day 2)
+### 3. `HallucinationMetric`
 * **Target**: LLM Generator
 * **Threshold**: Modern DeepEval uses `0.7` to `1.0` (higher = better alignment)
 * **How It Evaluates**: Evaluates whether any statement in `actual_output` directly contradicts `context`.
@@ -70,7 +70,7 @@ evaluation_params = [SingleTurnParams.INPUT, SingleTurnParams.ACTUAL_OUTPUT]
 
 ---
 
-### 4. `ContextualRelevancyMetric` (Day 3)
+### 4. `ContextualRelevancyMetric`
 * **Target**: Vector Database / Search Engine
 * **Threshold**: Typically `0.7`
 * **How It Evaluates**: Calculates the ratio of relevant sentences to total sentences in `retrieval_context`.
@@ -78,7 +78,7 @@ evaluation_params = [SingleTurnParams.INPUT, SingleTurnParams.ACTUAL_OUTPUT]
 
 ---
 
-### 5. `ContextualRecallMetric` (Day 3)
+### 5. `ContextualRecallMetric`
 * **Target**: Vector Database / Search Engine
 * **Threshold**: Typically `0.8`
 * **How It Evaluates**: Checks what fraction of the `expected_output` facts were successfully retrieved in `retrieval_context`.
@@ -86,7 +86,7 @@ evaluation_params = [SingleTurnParams.INPUT, SingleTurnParams.ACTUAL_OUTPUT]
 
 ---
 
-### 6. `ContextualPrecisionMetric` (Day 3)
+### 6. `ContextualPrecisionMetric`
 * **Target**: Search Ranking / Reranker
 * **Threshold**: Typically `0.7` to `0.8`
 * **How It Evaluates**: Rewards relevant documents appearing at Rank #1 and penalizes relevant documents buried at lower ranks.
@@ -94,7 +94,7 @@ evaluation_params = [SingleTurnParams.INPUT, SingleTurnParams.ACTUAL_OUTPUT]
 
 ---
 
-### 7. `GEval` (Day 4)
+### 7. `GEval` (Custom Business Rubrics)
 * **Target**: Custom Business Rules / Brand Voice / SLAs
 * **Threshold**: Custom (e.g. `0.75`)
 * **How It Evaluates**: Takes natural language `criteria` and `evaluation_steps`, uses Chain-of-Thought (CoT) reasoning, and grades adherence.
