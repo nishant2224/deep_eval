@@ -82,7 +82,7 @@ uv run pytest
 ## 📖 10-Day Curriculum
 
 - [x] **Day 1**: Foundations, Mental Model & Smoke Tests (`AnswerRelevancyMetric`)
-- [ ] **Day 2**: RAG Pipeline Evaluation Part 1 — Faithfulness & Hallucination Detection
+- [x] **Day 2**: RAG Pipeline Evaluation Part 1 — Faithfulness & Hallucination Detection
 - [ ] **Day 3**: RAG Pipeline Evaluation Part 2 — Context Retrieval Triad (Precision, Recall, Relevancy)
 - [ ] **Day 4**: Custom Business Rubrics with G-Eval
 - [ ] **Day 5**: LLM Safety, Guardrails & Red-Teaming (Toxicity, Bias, Prompt Injection)
