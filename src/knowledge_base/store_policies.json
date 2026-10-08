@@ -1,0 +1,27 @@
+[
+  {
+    "id": "return_policy",
+    "topic": "Returns and Refunds",
+    "content": "Customers can return most items within 30 days of confirmed delivery for a full refund. Items must be unopened, in original packaging, and accompanied by the original order receipt. Opened consumer electronics incur a 15% restocking fee. Digital gift cards, downloadable software, and clearance items marked Final Sale are non-refundable."
+  },
+  {
+    "id": "warranty_policy",
+    "topic": "Warranty and Hardware Repairs",
+    "content": "All hardware products include a 1-year limited manufacturer warranty covering mechanical and electrical defects. Standard warranty strictly excludes accidental damage such as liquid spills, cracked screens from drops, unauthorized modifications, or normal cosmetic wear and tear. Warranty claims require proof of purchase and serial number verification."
+  },
+  {
+    "id": "shipping_delivery",
+    "topic": "Shipping Speeds and Costs",
+    "content": "Standard domestic shipping takes 3 to 5 business days and is free on all orders over $50. For orders under $50, standard shipping is a flat $4.99. Express next-day delivery is available for $14.99. Orders exceeding $200 in total value require an adult signature upon delivery for fraud prevention."
+  },
+  {
+    "id": "lost_stolen_packages",
+    "topic": "Lost and Damaged Packages",
+    "content": "If a package is marked as delivered by the carrier but cannot be located, customers must report the missing shipment within 48 hours. Our security team initiates a 3 to 5 business day carrier investigation. If the package cannot be recovered, an expedited replacement will be shipped or a full refund issued."
+  },
+  {
+    "id": "vip_membership",
+    "topic": "VIP Membership Tier",
+    "content": "The VIP Gold Membership costs $79 per year. VIP Gold members receive free 2-day shipping on all orders with no minimum purchase requirement, an extended 60-day return window with zero restocking fees, and 24/7 dedicated priority phone support."
+  }
+]

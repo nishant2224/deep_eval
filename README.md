@@ -92,7 +92,7 @@ uv run pytest
 - [x] **Day 2**: RAG Pipeline Evaluation Part 1 — Faithfulness & Hallucination Detection
 - [x] **Day 3**: RAG Pipeline Evaluation Part 2 — Context Retrieval Triad (Precision, Recall, Relevancy)
 - [x] **Day 4**: Custom Business Rubrics with G-Eval
-- [ ] **Day 5**: The Live Application Under Test (AUT) — Building the Customer Support RAG Bot & E2E Testing
+- [x] **Day 5**: The Live Application Under Test (AUT) — Building the Customer Support RAG Bot & E2E Testing
 - [ ] **Day 6**: LLM Safety, Guardrails & Red-Teaming (Toxicity, Bias, Jailbreak & Injection Defense)
 - [ ] **Day 7**: Conversational AI & Autonomous Agent Evaluation (Multi-turn Chat & Tool Call Trajectories)
 - [ ] **Day 8**: Synthetic Golden Dataset Generation (`Synthesizer` from Knowledge Base)

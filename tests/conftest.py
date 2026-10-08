@@ -22,6 +22,8 @@ if sys.platform == "win32":
 
 # Load .env file from project root
 ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 load_dotenv(ROOT_DIR / ".env")
 
 
@@ -32,6 +34,6 @@ def rate_limit_pacer():
     Prevents triggering HTTP 429 (Resource Exhausted) on free-tier LLM API keys (15 RPM).
     """
     yield
-    time.sleep(2.0)
+    time.sleep(4.0)
 
 
