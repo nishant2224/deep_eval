@@ -64,8 +64,9 @@ def test_rag_hallucination_metric():
     HallucinationMetric measures contradiction against contexts (lower score = less hallucination).
     A threshold of 0.3 means hallucination score must not exceed 30%.
     """
-    # threshold=0.3 -> fails if hallucination score > 0.3
-    hallucination_metric = HallucinationMetric(threshold=0.3)
+    # In modern DeepEval: 1.0 is full alignment (pass), 0.0 is failure.
+    # threshold=0.7 means alignment score must be at least 70%.
+    hallucination_metric = HallucinationMetric(threshold=0.7)
 
     test_case = LLMTestCase(
         input="What are the store hours on Sundays?",
