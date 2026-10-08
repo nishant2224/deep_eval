@@ -84,7 +84,7 @@ uv run pytest
 - [x] **Day 1**: Foundations, Mental Model & Smoke Tests (`AnswerRelevancyMetric`)
 - [x] **Day 2**: RAG Pipeline Evaluation Part 1 — Faithfulness & Hallucination Detection
 - [x] **Day 3**: RAG Pipeline Evaluation Part 2 — Context Retrieval Triad (Precision, Recall, Relevancy)
-- [ ] **Day 4**: Custom Business Rubrics with G-Eval
+- [x] **Day 4**: Custom Business Rubrics with G-Eval
 - [ ] **Day 5**: LLM Safety, Guardrails & Red-Teaming (Toxicity, Bias, Prompt Injection)
 - [ ] **Day 6**: Conversational & AI Agent Evaluation (Multi-turn conversations & trajectories)
 - [ ] **Day 7**: Synthetic Golden Dataset Generation (`Synthesizer`)
