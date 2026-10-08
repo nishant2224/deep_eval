@@ -26,13 +26,20 @@ This repository provides an enterprise-grade automated testing framework impleme
 
 ```
 deep-eval-project/
-├── learning_notes/                     # 10-Day curriculum and SDET architectural notes
+├── learning_notes/                     # 10-Day curriculum & SDET architectural notes
+│   ├── METRICS_MASTER_REFERENCE.md     # 📊 Master catalog of all metrics & failure modes
 │   ├── 00_python_tooling_with_uv.md    # UV package manager guide & CLI cheatsheet
 │   ├── 01_mental_model_and_foundations.md # Deterministic vs. Probabilistic testing
-│   └── 02_judge_configuration_and_framework_setup.md # Judge config & Windows gotchas
+│   ├── 02_judge_configuration_and_framework_setup.md # Judge config & Windows gotchas
+│   ├── 03_rag_faithfulness_and_hallucination.md # Day 2: Faithfulness & Hallucination
+│   ├── 04_rag_context_retrieval_triad.md        # Day 3: Context Retrieval Triad
+│   └── 05_custom_business_rubrics_with_geval.md # Day 4: G-Eval Business Rubrics
 ├── tests/                              # Pytest test suites
-│   ├── conftest.py                     # Global fixtures & environment bootstrap
-│   └── test_00_smoke.py                # Baseline smoke tests (Answer Relevancy)
+│   ├── conftest.py                     # Global fixtures, rate limiter & .env loader
+│   ├── test_00_smoke.py                # Day 1: Answer Relevancy smoke tests
+│   ├── test_01_rag_faithfulness.py     # Day 2: Faithfulness & Hallucination
+│   ├── test_02_rag_context_triad.py    # Day 3: Context Retrieval Triad
+│   └── test_03_custom_geval.py         # Day 4: Custom Business Rubrics (G-Eval)
 ├── pyproject.toml                      # Modern Python project manifest (PEP 621)
 ├── uv.lock                             # Deterministic dependency lockfile
 ├── .env.example                        # Template for environment secrets
