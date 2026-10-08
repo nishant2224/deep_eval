@@ -1,0 +1,19 @@
+[project]
+name = "enterprise-llm-evalops"
+version = "0.1.0"
+description = "Enterprise RAG & AI Agent Quality Assurance Framework powered by DeepEval & Pytest"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "deepeval>=4.2.8",
+    "pytest>=8.0.0",
+    "openai>=1.0.0",
+    "python-dotenv>=1.0.0",
+    "google-genai>=2.28.0",
+    "portalocker[win32]>=4.4.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v -s --tb=short"

@@ -1,0 +1,23 @@
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Environment secrets
+.env
+.env.local
+*.env
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pytest_cache/
+
+# DeepEval local artifacts and traces
+.deepeval/
+.deepeval_cache/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
