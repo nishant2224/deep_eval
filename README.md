@@ -27,6 +27,7 @@ This repository provides an enterprise-grade automated testing framework impleme
 ```
 deep-eval-project/
 ├── learning_notes/                     # 10-Day curriculum & SDET architectural notes
+│   ├── QUICK_REVISION_CHEATSHEET.md    # ⚡ 5-min revision cheat sheet & SDET gotchas guide
 │   ├── METRICS_MASTER_REFERENCE.md     # 📊 Master catalog of all metrics & failure modes
 │   ├── 00_python_tooling_with_uv.md    # UV package manager guide & CLI cheatsheet
 │   ├── 01_mental_model_and_foundations.md # Deterministic vs. Probabilistic testing
