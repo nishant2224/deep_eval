@@ -40,8 +40,6 @@ deep-eval-project/
 │   ├── 08_conversational_and_agent_evaluation.md # Day 7: Multi-Turn & Agent Evaluation
 │   ├── 09_synthetic_dataset_generation.md      # Day 8: Synthetic Data & Benchmarks
 │   └── 10_sdet_framework_and_cicd_quality_gates.md # Day 9: CI/CD Quality Gates & Regressions
-├── .github/workflows/                  # 🤖 Automated CI/CD Pipelines
-│   └── llm_eval_ci.yml                 # GitHub Actions Quality Gate workflow
 ├── data/                               # 📦 Synthetic Datasets & Golden Benchmarks
 │   └── synthetic_goldens.json          # Synthesized ground-truth test cases
 ├── scripts/                            # ⚙️ Offline utility & generation scripts
@@ -116,5 +114,5 @@ uv run pytest
 - [x] **Day 6**: LLM Safety, Guardrails & Red-Teaming (Toxicity, Bias, Jailbreak & Injection Defense)
 - [x] **Day 7**: Conversational AI & Autonomous Agent Evaluation (Multi-turn Chat & Tool Call Trajectories)
 - [x] **Day 8**: Synthetic Golden Dataset Generation (`Synthesizer` from Knowledge Base)
-- [x] **Day 9**: SDET Test Automation Framework & CI/CD Quality Gates (Fixtures, Parametrization, GitHub Actions)
+- [x] **Day 9**: SDET Test Automation Framework & CI/CD Quality Gates (Fixtures, Parametrization, Jenkins Pipelines)
 - [ ] **Day 10**: Portfolio Packaging, Confident AI Dashboards & Resume Highlights

@@ -80,22 +80,23 @@ A **Quality Gate** is an automated pass/fail checkpoint that prevents defective 
 sequenceDiagram
     autonumber
     actor Dev as Developer
-    participant PR as GitHub Pull Request
-    participant Action as GitHub Actions CI
+    participant Git as SCM / Bitbucket / GitHub
+    participant Jenkins as Jenkins CI (Jenkinsfile)
     participant Judge as Gemini Judge (DeepEval)
     participant Main as Production Branch
 
-    Dev->>PR: Push new prompt / retrieval code
-    PR->>Action: Trigger CI Workflow (.github/workflows/llm_eval_ci.yml)
-    Action->>Action: Install dependencies via Astral UV (uv sync)
-    Action->>Judge: Run Parameterized Regression Suite
+    Dev->>Git: Push new prompt / retrieval code
+    Git->>Jenkins: Webhook triggers Pipeline Build
+    Jenkins->>Jenkins: Install dependencies via Astral UV (uv sync --frozen)
+    Jenkins->>Judge: Run Parameterized Regression Suite
     alt Any Metric < Threshold
-        Judge-->>Action: Metric Failed (e.g. Faithfulness = 0.52 < 0.75)
-        Action-->>PR: ❌ Build FAILED — Block PR Merge
+        Judge-->>Jenkins: Metric Failed (e.g. Faithfulness = 0.52 < 0.75)
+        Jenkins-->>Jenkins: junit step records failed tests
+        Jenkins-->>Git: ❌ Build FAILED — Block Deployment / PR Merge
     else All Metrics >= Threshold
-        Judge-->>Action: All Metrics Passed (Scores >= 0.75)
-        Action-->>PR: ✅ Build PASSED — Allow Merge
-        PR->>Main: Merge to Main
+        Judge-->>Jenkins: All Metrics Passed (Scores >= 0.75)
+        Jenkins-->>Git: ✅ Build PASSED — Allow Merge
+        Jenkins->>Main: Proceed to Deploy Stage
     end
 ```
 
@@ -104,23 +105,82 @@ sequenceDiagram
   * Prompt Leakage / Jailbreak Vulnerabilities.
   * Toxicity & Bias ($\text{Score} < 0.8$).
   * Factual Faithfulness on legal/monetary policies ($\text{Score} < 0.70$).
-  * *Action*: PR merge button is disabled; developer must fix before merging.
+  * *Action*: Jenkins pipeline exits with code 1; build is marked **UNSTABLE / FAILED**, blocking deployment.
 * **Soft Gates (Non-Blocking / Monitoring)**:
   * Slight latency fluctuations ($\pm 15\%$).
   * Stylistic conciseness or tone nuances.
-  * *Action*: Log warning or post a PR comment summary without failing the build.
+  * *Action*: Log warning or archive metric trends without failing the build.
 
 ---
 
-## 🚀 4. GitHub Actions Workflow Architecture
+## 🏗️ 4. Enterprise Jenkins Pipeline Architecture (`Jenkinsfile`)
 
-To run DeepEval reliably in CI/CD without exceeding API budgets or slowing down teams:
+In enterprise organizations using Jenkins, pipelines are written using **Declarative Pipeline syntax** (Groovy) inside a `Jenkinsfile` at the root of the repository:
 
-1. **Use Astral `uv`**:
-   Using `astral-sh/setup-uv` restores dependencies from `uv.lock` in under 3 seconds, cutting minutes off GitHub Actions runners compared to standard `pip install`.
-2. **Inject Secrets Securely**:
-   Pass `GOOGLE_API_KEY` and model flags from GitHub Repository Secrets (`${{ secrets.GOOGLE_API_KEY }}`).
-3. **Pace API Calls**:
-   The `rate_limit_pacer` fixture in `conftest.py` ensures CI runners respect the 15 RPM free tier quota without throwing `429 RESOURCE_EXHAUSTED`.
-4. **Generate Standard Reports**:
-   Run with `--junitxml=reports/junit.xml` to generate test reports natively recognized by GitHub Actions.
+```groovy
+pipeline {
+    agent {
+        // Run on a Docker agent with Python 3.12 or a configured Linux build agent
+        docker {
+            image 'python:3.12-slim'
+        }
+    }
+
+    environment {
+        // Securely inject secrets from Jenkins Credential Store
+        GOOGLE_API_KEY    = credentials('google-gemini-api-key')
+        GEMINI_MODEL_NAME = 'gemini-3.5-flash-lite'
+        USE_GEMINI_MODEL  = 'Y'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Setup Tooling & Dependencies') {
+            steps {
+                sh '''
+                    # Install Astral UV for fast deterministic dependency sync
+                    curl -LsSf https://astral.sh/uv/install.sh | sh
+                    export PATH="$HOME/.local/bin:$PATH"
+                    uv sync --frozen
+                '''
+            }
+        }
+
+        stage('Run LLM Quality Gates & Regressions') {
+            steps {
+                sh '''
+                    export PATH="$HOME/.local/bin:$PATH"
+                    mkdir -p reports
+                    uv run pytest tests/test_00_smoke.py tests/test_08_dataset_parametrized_regression.py \
+                        -v --junitxml=reports/junit.xml
+                '''
+            }
+        }
+    }
+
+    post {
+        always {
+            // Jenkins native JUnit plugin parses XML and renders test trend charts
+            junit testResults: 'reports/junit.xml', allowEmptyResults: false
+        }
+        failure {
+            echo "❌ Quality Gate breached! One or more LLM evaluation metrics failed threshold."
+        }
+        success {
+            echo "✅ All LLM Quality Gates passed successfully!"
+        }
+    }
+}
+```
+
+### Why This Jenkins Integration is Enterprise-Ready:
+1. **JUnit Plugin Native Support**: Pytest generates `--junitxml=reports/junit.xml`, which Jenkins automatically turns into interactive pass/fail graphs, historical trend curves, and failure breakdown tables without third-party plugins.
+2. **Credential Masking**: Jenkins `credentials(...)` automatically masks `GOOGLE_API_KEY` from build console logs, preventing API key exposure.
+3. **Deterministic Fast Builds**: Using `uv sync --frozen` installs dependencies from `uv.lock` in seconds, eliminating build agent cache churn.
+4. **Rate-Limit Safe**: The test framework's `rate_limit_pacer` fixture paces requests automatically, preventing `429 RESOURCE_EXHAUSTED` failures across distributed Jenkins executors.
+

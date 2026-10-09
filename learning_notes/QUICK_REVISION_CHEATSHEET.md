@@ -139,11 +139,11 @@ LLM Testing (Generative AI / RAG / Agents)
 * **The Problem**: Running ad-hoc single tests doesn't scale to production regression testing or PR gating.
 * **The Solution**: 
   1. **Data-Driven Testing (DDT)**: Use `@pytest.mark.parametrize` over your benchmark dataset (`data/synthetic_goldens.json`) with dynamic, descriptive `ids`.
-  2. **Hard Quality Gates**: Block PR merges in CI if any critical metric (Faithfulness, Relevancy, Toxicity) falls below threshold.
-  3. **GitHub Actions CI (`.github/workflows/llm_eval_ci.yml`)**:
-     * Installs dependencies in $< 3\text{s}$ via Astral `uv` (`astral-sh/setup-uv@v5`).
-     * Injects repository secrets (`GOOGLE_API_KEY`).
-     * Exports JUnit XML reports (`--junitxml=reports/junit.xml`).
+  2. **Hard Quality Gates**: Block deployment in CI if any critical metric (Faithfulness, Relevancy, Toxicity) falls below threshold.
+  3. **Enterprise Jenkins CI (`Jenkinsfile`)**:
+     * Installs dependencies in $< 3\text{s}$ via Astral `uv` (`sh 'uv sync --frozen'`).
+     * Injects credentials securely via Jenkins Credential Store (`credentials('google-gemini-api-key')`).
+     * Exports and visualizes JUnit XML reports via native Jenkins JUnit plugin (`junit 'reports/junit.xml'`).
 * **CI/CD Flakiness Gotcha**: Free-tier APIs enforce strict rate limits (15 RPM). In CI, multiple metrics evaluated across parameterized tests will trigger `429 RESOURCE_EXHAUSTED` unless paced with a fixture (`time.sleep(8.0)` in `rate_limit_pacer`).
 
 ---
