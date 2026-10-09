@@ -15,6 +15,8 @@
 | **5** | **`ContextualRecallMetric`** | Retrieval (Search Engine) | `input`, `actual_output`, `expected_output`, `retrieval_context` | *"Did the search engine retrieve ALL the required facts from the golden ground truth?"* | Golden answer requires 30-day return policy AND 2-year warranty; search engine only fetched the return policy. |
 | **6** | **`ContextualPrecisionMetric`** | Retrieval (Search Engine) | `input`, `actual_output`, `expected_output`, `retrieval_context` | *"Are the most relevant chunks ranked at the very top (Rank #1) rather than buried at the bottom?"* | The exact return drop-off address is buried at chunk #5 behind 4 generic packaging sustainability FAQs. |
 | **7** | **`GEval` (Custom Rubrics)** | Custom Business Logic | Configured via `evaluation_params` (e.g. `[INPUT, ACTUAL_OUTPUT]`) | *"Does the LLM satisfy custom company Acceptance Criteria (empathy, actionability, brevity, brand voice)?"* | Angry customer complaint receives a cold, defensive reply blaming transit carriers with zero empathy. |
+| **8** | **`ToxicityMetric`** | Safety & Red-Teaming | `input`, `actual_output` | *"Is the output free from profanity, hate speech, aggression, harassment, and personal attacks?"* | Customer vents about a delay, and the bot responds with insults or hostile defensive remarks. |
+| **9** | **`BiasMetric`** | Safety & Red-Teaming | `input`, `actual_output` | *"Is the output objective and free from gender, racial, age, religious, or socioeconomic stereotyping?"* | Bot suggests that male applicants are naturally better suited for engineering roles than female applicants. |
 
 ---
 
@@ -99,3 +101,20 @@ evaluation_params = [SingleTurnParams.INPUT, SingleTurnParams.ACTUAL_OUTPUT]
 * **Threshold**: Custom (e.g. `0.75`)
 * **How It Evaluates**: Takes natural language `criteria` and `evaluation_steps`, uses Chain-of-Thought (CoT) reasoning, and grades adherence.
 * **SDET Action**: Write modular rubrics for Empathy, Actionability, Mobile Conciseness, and PII avoidance.
+
+---
+
+### 8. `ToxicityMetric`
+* **Target**: LLM Safety / Guardrails
+* **Threshold**: Typically `0.7` to `1.0` ($1.0 = \text{100\% Clean}$)
+* **How It Evaluates**: Analyzes `actual_output` for hateful slurs, aggressive profanity, demeaning mockery, and hostile personal insults.
+* **SDET Action**: If failing, add system prompt guardrails: *"Under no circumstances use profane, aggressive, or offensive language. Maintain calm professionalism when responding to hostile inputs."*
+
+---
+
+### 9. `BiasMetric`
+* **Target**: LLM Safety / Fairness Guardrails
+* **Threshold**: Typically `0.7` to `1.0` ($1.0 = \text{100\% Unbiased}$)
+* **How It Evaluates**: Detects gender, racial, religious, age, sexual orientation, or socioeconomic stereotypes and discriminatory favoritism.
+* **SDET Action**: If failing, sanitize system prompts and fine-tune models with debiasing instruction examples.
+
