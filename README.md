@@ -26,21 +26,21 @@ This repository provides an enterprise-grade automated testing framework impleme
 
 ```
 deep-eval-project/
-├── learning_notes/                     # 10-Day curriculum & SDET architectural notes
+├── learning_notes/                     # SDET architectural documentation & reference guides
 │   ├── QUICK_REVISION_CHEATSHEET.md    # ⚡ 5-min revision cheat sheet & SDET gotchas guide
 │   ├── METRICS_MASTER_REFERENCE.md     # 📊 Master catalog of all metrics & failure modes
 │   ├── 00_python_tooling_with_uv.md    # UV package manager guide & CLI cheatsheet
 │   ├── 01_mental_model_and_foundations.md # Deterministic vs. Probabilistic testing
 │   ├── 02_judge_configuration_and_framework_setup.md # Judge config & Windows gotchas
-│   ├── 03_rag_faithfulness_and_hallucination.md # Day 2: Faithfulness & Hallucination
-│   ├── 04_rag_context_retrieval_triad.md        # Day 3: Context Retrieval Triad
-│   ├── 05_custom_business_rubrics_with_geval.md # Day 4: G-Eval Business Rubrics
-│   ├── 06_building_and_testing_live_rag_aut.md  # Day 5: Live RAG Application Under Test
-│   ├── 07_llm_safety_guardrails_and_red_teaming.md # Day 6: Safety, Bias & Red-Teaming
-│   ├── 08_conversational_and_agent_evaluation.md # Day 7: Multi-Turn & Agent Evaluation
-│   ├── 09_synthetic_dataset_generation.md      # Day 8: Synthetic Data & Benchmarks
-│   ├── 10_sdet_framework_and_cicd_quality_gates.md # Day 9: CI/CD Quality Gates & Regressions
-│   └── 11_portfolio_packaging_and_resume_highlights.md # Day 10: Portfolio & Resume Packaging
+│   ├── 03_rag_faithfulness_and_hallucination.md # Faithfulness & Hallucination
+│   ├── 04_rag_context_retrieval_triad.md        # Context Retrieval Triad
+│   ├── 05_custom_business_rubrics_with_geval.md # G-Eval Business Rubrics
+│   ├── 06_building_and_testing_live_rag_aut.md  # Live RAG Application Under Test
+│   ├── 07_llm_safety_guardrails_and_red_teaming.md # Safety, Bias & Red-Teaming
+│   ├── 08_conversational_and_agent_evaluation.md # Multi-Turn & Agent Evaluation
+│   ├── 09_synthetic_dataset_generation.md      # Synthetic Data & Benchmarks
+│   ├── 10_sdet_framework_and_cicd_quality_gates.md # CI/CD Quality Gates & Regressions
+│   └── 11_portfolio_packaging_and_resume_highlights.md # Portfolio & Resume Packaging
 ├── data/                               # 📦 Synthetic Datasets & Golden Benchmarks
 │   └── synthetic_goldens.json          # Synthesized ground-truth test cases
 ├── scripts/                            # ⚙️ Offline utility & generation scripts
@@ -50,15 +50,15 @@ deep-eval-project/
 │   └── bot.py                          # CustomerSupportRAGBot implementation
 ├── tests/                              # Pytest test suites
 │   ├── conftest.py                     # Global fixtures, rate limiter & .env loader
-│   ├── test_00_smoke.py                # Day 1: Answer Relevancy smoke tests
-│   ├── test_01_rag_faithfulness.py     # Day 2: Faithfulness & Hallucination
-│   ├── test_02_rag_context_triad.py    # Day 3: Context Retrieval Triad
-│   ├── test_03_custom_geval.py         # Day 4: Custom Business Rubrics (G-Eval)
-│   ├── test_04_live_rag_e2e.py         # Day 5: Live End-to-End RAG Testing
-│   ├── test_05_safety_and_red_team.py  # Day 6: Safety, Bias & Adversarial Red-Teaming
-│   ├── test_06_conversational_e2e.py   # Day 7: Multi-Turn Conversational & Role Adherence
-│   ├── test_07_synthetic_goldens_e2e.py # Day 8: Live Evaluation against Synthetic Goldens
-│   └── test_08_dataset_parametrized_regression.py # Day 9: Parameterized Golden Regressions
+│   ├── test_00_smoke.py                # Answer Relevancy smoke tests
+│   ├── test_01_rag_faithfulness.py     # Faithfulness & Hallucination
+│   ├── test_02_rag_context_triad.py    # Context Retrieval Triad
+│   ├── test_03_custom_geval.py         # Custom Business Rubrics (G-Eval)
+│   ├── test_04_live_rag_e2e.py         # Live End-to-End RAG Testing
+│   ├── test_05_safety_and_red_team.py  # Safety, Bias & Adversarial Red-Teaming
+│   ├── test_06_conversational_e2e.py   # Multi-Turn Conversational & Role Adherence
+│   ├── test_07_synthetic_goldens_e2e.py # Live Evaluation against Synthetic Goldens
+│   └── test_08_dataset_parametrized_regression.py # Parameterized Golden Regressions
 ├── pyproject.toml                      # Modern Python project manifest (PEP 621)
 ├── uv.lock                             # Deterministic dependency lockfile
 ├── .env.example                        # Template for environment secrets
@@ -105,25 +105,26 @@ uv run pytest
 
 ---
 
-## 📖 10-Day Curriculum
+## 🧪 Evaluation Test Suites & Coverage Matrix
 
-- [x] **Day 1**: Foundations, Mental Model & Smoke Tests (`AnswerRelevancyMetric`)
-- [x] **Day 2**: RAG Pipeline Evaluation Part 1 — Faithfulness & Hallucination Detection
-- [x] **Day 3**: RAG Pipeline Evaluation Part 2 — Context Retrieval Triad (Precision, Recall, Relevancy)
-- [x] **Day 4**: Custom Business Rubrics with G-Eval
-- [x] **Day 5**: The Live Application Under Test (AUT) — Building the Customer Support RAG Bot & E2E Testing
-- [x] **Day 6**: LLM Safety, Guardrails & Red-Teaming (Toxicity, Bias, Jailbreak & Injection Defense)
-- [x] **Day 7**: Conversational AI & Autonomous Agent Evaluation (Multi-turn Chat & Tool Call Trajectories)
-- [x] **Day 8**: Synthetic Golden Dataset Generation (`Synthesizer` from Knowledge Base)
-- [x] **Day 9**: SDET Test Automation Framework & CI/CD Quality Gates (Fixtures, Parametrization, Jenkins Pipelines)
-- [x] **Day 10**: Portfolio Packaging, Confident AI Dashboards & Resume Highlights
+| Test Suite | Evaluation Focus | Primary Metrics / Techniques |
+| :--- | :--- | :--- |
+| [`test_00_smoke.py`](file:///d:/deep-eval-project/tests/test_00_smoke.py) | Foundations & Smoke Tests | `AnswerRelevancyMetric` |
+| [`test_01_rag_faithfulness.py`](file:///d:/deep-eval-project/tests/test_01_rag_faithfulness.py) | RAG Pipeline Grounding & Factuality | `FaithfulnessMetric`, `HallucinationMetric` |
+| [`test_02_rag_context_triad.py`](file:///d:/deep-eval-project/tests/test_02_rag_context_triad.py) | Vector DB Retrieval Quality (The Triad) | `ContextualPrecisionMetric`, `ContextualRecallMetric`, `ContextualRelevancyMetric` |
+| [`test_03_custom_geval.py`](file:///d:/deep-eval-project/tests/test_03_custom_geval.py) | Custom Business Rubrics (G-Eval) | `GEval` (Empathy, Actionability with Chain-of-Thought scoring) |
+| [`test_04_live_rag_e2e.py`](file:///d:/deep-eval-project/tests/test_04_live_rag_e2e.py) | Live Application Under Test (AUT) | End-to-End evaluation of live `CustomerSupportRAGBot` against Gemini |
+| [`test_05_safety_and_red_team.py`](file:///d:/deep-eval-project/tests/test_05_safety_and_red_team.py) | Safety & Adversarial Red-Teaming | `ToxicityMetric`, `BiasMetric`, Prompt Injection & Jailbreak Defense |
+| [`test_06_conversational_e2e.py`](file:///d:/deep-eval-project/tests/test_06_conversational_e2e.py) | Multi-Turn Conversational & Agent Flows | `ConversationalTestCase`, `RoleAdherenceMetric`, `ConversationCompletenessMetric` |
+| [`test_07_synthetic_goldens_e2e.py`](file:///d:/deep-eval-project/tests/test_07_synthetic_goldens_e2e.py) | Synthetic Benchmarking | Auto-generated Goldens via `Synthesizer`, tested against live SUT |
+| [`test_08_dataset_parametrized_regression.py`](file:///d:/deep-eval-project/tests/test_08_dataset_parametrized_regression.py) | Automated Regression & Quality Gates | Data-Driven Testing (`@pytest.mark.parametrize`), Jenkins CI Quality Gates |
 
 ---
 
 ## 💼 SDET Resume Highlights & Interview Talking Points
 
 Looking to showcase this framework on your resume or prepare for GenAI SDET interviews?
-Check out the **[Day 10 Portfolio & Resume Guide](file:///d:/deep-eval-project/learning_notes/11_portfolio_packaging_and_resume_highlights.md)** for:
+Check out the **[Portfolio & Resume Guide](file:///d:/deep-eval-project/learning_notes/11_portfolio_packaging_and_resume_highlights.md)** for:
 * **5 battle-tested resume bullet points** covering RAG Triad automation, G-Eval business rubrics, adversarial red-teaming, and CI/CD quality gates.
 * **4-pillar interview narrative** for explaining deterministic vs. probabilistic evaluation, isolating retrieval from generation, and shift-left quality gates.
 
