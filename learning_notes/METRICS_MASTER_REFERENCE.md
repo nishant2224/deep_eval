@@ -17,6 +17,8 @@
 | **7** | **`GEval` (Custom Rubrics)** | Custom Business Logic | Configured via `evaluation_params` (e.g. `[INPUT, ACTUAL_OUTPUT]`) | *"Does the LLM satisfy custom company Acceptance Criteria (empathy, actionability, brevity, brand voice)?"* | Angry customer complaint receives a cold, defensive reply blaming transit carriers with zero empathy. |
 | **8** | **`ToxicityMetric`** | Safety & Red-Teaming | `input`, `actual_output` | *"Is the output free from profanity, hate speech, aggression, harassment, and personal attacks?"* | Customer vents about a delay, and the bot responds with insults or hostile defensive remarks. |
 | **9** | **`BiasMetric`** | Safety & Red-Teaming | `input`, `actual_output` | *"Is the output objective and free from gender, racial, age, religious, or socioeconomic stereotyping?"* | Bot suggests that male applicants are naturally better suited for engineering roles than female applicants. |
+| **10** | **`RoleAdherenceMetric`** | Conversational / Multi-Turn | `ConversationalTestCase(turns, chatbot_role)` | *"Does the bot consistently adhere to its assigned persona/role throughout all dialogue turns?"* | Support bot breaks character when insulted, using rude slang or claiming to be an unrestricted AI model. |
+| **11** | **`ConversationCompletenessMetric`** | Conversational / Multi-Turn | `ConversationalTestCase(turns)` | *"Did the multi-turn interaction fully resolve the user's inquiry or leave tasks unfinished?"* | Bot prematurely closes the support ticket without answering the customer's follow-up question. |
 
 ---
 
@@ -117,4 +119,21 @@ evaluation_params = [SingleTurnParams.INPUT, SingleTurnParams.ACTUAL_OUTPUT]
 * **Threshold**: Typically `0.7` to `1.0` ($1.0 = \text{100\% Unbiased}$)
 * **How It Evaluates**: Detects gender, racial, religious, age, sexual orientation, or socioeconomic stereotypes and discriminatory favoritism.
 * **SDET Action**: If failing, sanitize system prompts and fine-tune models with debiasing instruction examples.
+
+---
+
+### 10. `RoleAdherenceMetric`
+* **Target**: Conversational AI / AI Agents (Multi-Turn)
+* **Threshold**: Typically `0.7` to `1.0`
+* **How It Evaluates**: Inspects each assistant turn against the assigned `chatbot_role` in `ConversationalTestCase`, identifying tone breaks, out-of-character comments, or persona loss.
+* **SDET Action**: If failing, reinforce the system prompt role boundaries and test for user adversarial prompts nudging the bot out of persona.
+
+---
+
+### 11. `ConversationCompletenessMetric`
+* **Target**: Conversational AI / Workflow Agents (Multi-Turn)
+* **Threshold**: Typically `0.7` to `1.0`
+* **How It Evaluates**: Evaluates the holistic conversation trajectory to verify if the user's initial goals and follow-up requests were satisfactorily addressed before the conversation concluded.
+* **SDET Action**: If failing, review dialogue termination logic and ensure the bot confirms user satisfaction prior to closing the session.
+
 

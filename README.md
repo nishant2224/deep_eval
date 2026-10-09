@@ -35,7 +35,8 @@ deep-eval-project/
 │   ├── 04_rag_context_retrieval_triad.md        # Day 3: Context Retrieval Triad
 │   ├── 05_custom_business_rubrics_with_geval.md # Day 4: G-Eval Business Rubrics
 │   ├── 06_building_and_testing_live_rag_aut.md  # Day 5: Live RAG Application Under Test
-│   └── 07_llm_safety_guardrails_and_red_teaming.md # Day 6: Safety, Bias & Red-Teaming
+│   ├── 07_llm_safety_guardrails_and_red_teaming.md # Day 6: Safety, Bias & Red-Teaming
+│   └── 08_conversational_and_agent_evaluation.md # Day 7: Multi-Turn & Agent Evaluation
 ├── src/                                # 🚀 Application Under Test (AUT)
 │   ├── knowledge_base/store_policies.json # Corporate knowledge base
 │   └── bot.py                          # CustomerSupportRAGBot implementation
@@ -46,7 +47,8 @@ deep-eval-project/
 │   ├── test_02_rag_context_triad.py    # Day 3: Context Retrieval Triad
 │   ├── test_03_custom_geval.py         # Day 4: Custom Business Rubrics (G-Eval)
 │   ├── test_04_live_rag_e2e.py         # Day 5: Live End-to-End RAG Testing
-│   └── test_05_safety_and_red_team.py  # Day 6: Safety, Bias & Adversarial Red-Teaming
+│   ├── test_05_safety_and_red_team.py  # Day 6: Safety, Bias & Adversarial Red-Teaming
+│   └── test_06_conversational_e2e.py   # Day 7: Multi-Turn Conversational & Role Adherence
 ├── pyproject.toml                      # Modern Python project manifest (PEP 621)
 ├── uv.lock                             # Deterministic dependency lockfile
 ├── .env.example                        # Template for environment secrets
@@ -101,7 +103,7 @@ uv run pytest
 - [x] **Day 4**: Custom Business Rubrics with G-Eval
 - [x] **Day 5**: The Live Application Under Test (AUT) — Building the Customer Support RAG Bot & E2E Testing
 - [x] **Day 6**: LLM Safety, Guardrails & Red-Teaming (Toxicity, Bias, Jailbreak & Injection Defense)
-- [ ] **Day 7**: Conversational AI & Autonomous Agent Evaluation (Multi-turn Chat & Tool Call Trajectories)
+- [x] **Day 7**: Conversational AI & Autonomous Agent Evaluation (Multi-turn Chat & Tool Call Trajectories)
 - [ ] **Day 8**: Synthetic Golden Dataset Generation (`Synthesizer` from Knowledge Base)
 - [ ] **Day 9**: SDET Test Automation Framework & CI/CD Quality Gates (Fixtures, Parametrization, GitHub Actions)
 - [ ] **Day 10**: Portfolio Packaging, Confident AI Dashboards & Resume Highlights
