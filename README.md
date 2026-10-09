@@ -38,7 +38,10 @@ deep-eval-project/
 │   ├── 06_building_and_testing_live_rag_aut.md  # Day 5: Live RAG Application Under Test
 │   ├── 07_llm_safety_guardrails_and_red_teaming.md # Day 6: Safety, Bias & Red-Teaming
 │   ├── 08_conversational_and_agent_evaluation.md # Day 7: Multi-Turn & Agent Evaluation
-│   └── 09_synthetic_dataset_generation.md      # Day 8: Synthetic Data & Benchmarks
+│   ├── 09_synthetic_dataset_generation.md      # Day 8: Synthetic Data & Benchmarks
+│   └── 10_sdet_framework_and_cicd_quality_gates.md # Day 9: CI/CD Quality Gates & Regressions
+├── .github/workflows/                  # 🤖 Automated CI/CD Pipelines
+│   └── llm_eval_ci.yml                 # GitHub Actions Quality Gate workflow
 ├── data/                               # 📦 Synthetic Datasets & Golden Benchmarks
 │   └── synthetic_goldens.json          # Synthesized ground-truth test cases
 ├── scripts/                            # ⚙️ Offline utility & generation scripts
@@ -55,7 +58,8 @@ deep-eval-project/
 │   ├── test_04_live_rag_e2e.py         # Day 5: Live End-to-End RAG Testing
 │   ├── test_05_safety_and_red_team.py  # Day 6: Safety, Bias & Adversarial Red-Teaming
 │   ├── test_06_conversational_e2e.py   # Day 7: Multi-Turn Conversational & Role Adherence
-│   └── test_07_synthetic_goldens_e2e.py # Day 8: Live Evaluation against Synthetic Goldens
+│   ├── test_07_synthetic_goldens_e2e.py # Day 8: Live Evaluation against Synthetic Goldens
+│   └── test_08_dataset_parametrized_regression.py # Day 9: Parameterized Golden Regressions
 ├── pyproject.toml                      # Modern Python project manifest (PEP 621)
 ├── uv.lock                             # Deterministic dependency lockfile
 ├── .env.example                        # Template for environment secrets
@@ -112,5 +116,5 @@ uv run pytest
 - [x] **Day 6**: LLM Safety, Guardrails & Red-Teaming (Toxicity, Bias, Jailbreak & Injection Defense)
 - [x] **Day 7**: Conversational AI & Autonomous Agent Evaluation (Multi-turn Chat & Tool Call Trajectories)
 - [x] **Day 8**: Synthetic Golden Dataset Generation (`Synthesizer` from Knowledge Base)
-- [ ] **Day 9**: SDET Test Automation Framework & CI/CD Quality Gates (Fixtures, Parametrization, GitHub Actions)
+- [x] **Day 9**: SDET Test Automation Framework & CI/CD Quality Gates (Fixtures, Parametrization, GitHub Actions)
 - [ ] **Day 10**: Portfolio Packaging, Confident AI Dashboards & Resume Highlights

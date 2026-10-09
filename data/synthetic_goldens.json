@@ -1,8 +1,8 @@
 [
     {
-        "input": "What mechanical/electrical defects does the 1-yr hrdw. warranty cover, excluding accidental damage and wear?",
+        "input": "What does the 1-year hardware warranty cover and what does it strictly exclude?",
         "actual_output": null,
-        "expected_output": "Based on the provided context, the 1-year limited manufacturer warranty covers mechanical and electrical defects generally, but it **strictly excludes**:\n* Accidental damage (such as liquid spills or cracked screens from drops)\n* Unauthorized modifications\n* Normal cosmetic wear and tear\n\n*(Note: The context does not list specific mechanical or electrical defects beyond stating that they are covered, provided there is proof of purchase and serial number verification).*",
+        "expected_output": "The 1-year manufacturer warranty covers mechanical and electrical defects. It strictly excludes accidental damage (such as liquid spills or cracked screens), unauthorized modifications, and normal cosmetic wear and tear.",
         "context": [
             "All hardware products include a 1-year limited manufacturer warranty covering mechanical and electrical defects. Standard warranty strictly excludes accidental damage such as liquid spills, cracked screens from drops, unauthorized modifications, or normal cosmetic wear and tear. Warranty claims require proof of purchase and serial number verification."
         ],

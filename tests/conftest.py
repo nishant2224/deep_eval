@@ -34,6 +34,6 @@ def rate_limit_pacer():
     Prevents triggering HTTP 429 (Resource Exhausted) on free-tier LLM API keys (15 RPM).
     """
     yield
-    time.sleep(4.0)
+    time.sleep(8.0)
 
 
