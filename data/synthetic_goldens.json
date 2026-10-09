@@ -1,0 +1,29 @@
+[
+    {
+        "input": "What mechanical/electrical defects does the 1-yr hrdw. warranty cover, excluding accidental damage and wear?",
+        "actual_output": null,
+        "expected_output": "Based on the provided context, the 1-year limited manufacturer warranty covers mechanical and electrical defects generally, but it **strictly excludes**:\n* Accidental damage (such as liquid spills or cracked screens from drops)\n* Unauthorized modifications\n* Normal cosmetic wear and tear\n\n*(Note: The context does not list specific mechanical or electrical defects beyond stating that they are covered, provided there is proof of purchase and serial number verification).*",
+        "context": [
+            "All hardware products include a 1-year limited manufacturer warranty covering mechanical and electrical defects. Standard warranty strictly excludes accidental damage such as liquid spills, cracked screens from drops, unauthorized modifications, or normal cosmetic wear and tear. Warranty claims require proof of purchase and serial number verification."
+        ],
+        "source_file": null
+    },
+    {
+        "input": "What fee applies to 30-day returns of opened electronics in original packaging with receipts?",
+        "actual_output": null,
+        "expected_output": "A 15% restocking fee applies to opened consumer electronics.",
+        "context": [
+            "Customers can return most items within 30 days of confirmed delivery for a full refund. Items must be unopened, in original packaging, and accompanied by the original order receipt. Opened consumer electronics incur a 15% restocking fee. Digital gift cards, downloadable software, and clearance items marked Final Sale are non-refundable."
+        ],
+        "source_file": null
+    },
+    {
+        "input": "What are standard domestic shipping durations and costs for orders over and under $50?",
+        "actual_output": null,
+        "expected_output": "Standard domestic shipping takes 3 to 5 business days. It is free for orders over $50, and costs a flat $4.99 for orders under $50.",
+        "context": [
+            "Standard domestic shipping takes 3 to 5 business days and is free on all orders over $50. For orders under $50, standard shipping is a flat $4.99. Express next-day delivery is available for $14.99. Orders exceeding $200 in total value require an adult signature upon delivery for fraud prevention."
+        ],
+        "source_file": null
+    }
+]

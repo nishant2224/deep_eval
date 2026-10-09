@@ -115,17 +115,23 @@ LLM Testing (Generative AI / RAG / Agents)
 
 ---
 
-## 🔮 4. Preview of Upcoming Modules (To Be Updated in Future Days)
+## 🔮 4. Modular Deep-Dives & Advanced Pipelines
 
 ### Day 8: Synthetic Golden Dataset Generation (`Synthesizer`)
-* **Core Concept**: Manually curating 500 ground-truth Q&A test cases is infeasible. DeepEval's `Synthesizer` reads knowledge base documents (`store_policies.json`) and automatically generates realistic user questions, ground truths, and context chunks with varying difficulty (simple factual, multi-hop reasoning).
+* **The Problem**: Writing 300+ ground truth `(input, expected_output, context)` pairs manually takes weeks and introduces human bias.
+* **The Solution**: DeepEval's `Synthesizer` uses an LLM to reverse-engineer realistic customer questions and ground-truth answers directly from raw context chunks.
 * **Key Functionality**:
   ```python
   from deepeval.synthesizer import Synthesizer
   synthesizer = Synthesizer()
-  golden_dataset = synthesizer.generate_goldens_from_docs(documents=[...])
+  goldens = synthesizer.generate_goldens_from_contexts(
+      contexts=[[chunk_text]],
+      max_goldens_per_context=1,
+      include_expected_output=True
+  )
+  synthesizer.save_as(file_type="json", directory="data", file_name="synthetic_goldens")
   ```
-* *(Future questions & notes from Day 8 will be appended here)*
+* **SDET Golden Rule**: Always serialize and commit your generated goldens to `data/` as static JSON. Never regenerate goldens on every CI/CD run—use the static JSON as the regression benchmark to conserve tokens and maintain determinism.
 
 ---
 
