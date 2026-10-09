@@ -108,10 +108,114 @@ As an SDET, conversational test design mirrors standard E2E journey testing:
 
 ---
 
+## 🔌 5. How to Extract Turns from Real Chatbots (SDET Implementation Guide)
+
+In production environments, conversational dialogues do not originate as static hardcoded Python lists. As an SDET, you will extract turns using one of two primary architectural patterns:
+
+### Pattern A: Active Live Test Driver (In-Sprint CI/CD Testing)
+When executing end-to-end regression tests against a staging or dev chatbot API, the **test script itself acts as the customer**. The test runner iterates over a designed user journey, calls the API, and accumulates `Turn` objects dynamically:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor SDET as Test Runner (Pytest)
+    participant API as Chatbot API (/api/v1/chat)
+    participant Session as Redis / DB
+    participant Eval as DeepEval
+
+    Note over SDET: Initialize turns = []
+    SDET->>API: POST /chat {sessionId: "test-42", message: "Can I return open items?"}
+    Note over SDET: turns.append(Turn(role="user", content="Can I return open items?"))
+    API->>Session: Store Turn in state memory
+    API-->>SDET: 200 OK {reply: "Open items can be exchanged within 14 days."}
+    Note over SDET: turns.append(Turn(role="assistant", content=reply))
+
+    SDET->>API: POST /chat {sessionId: "test-42", message: "Thank you!"}
+    Note over SDET: turns.append(Turn(role="user", content="Thank you!"))
+    API-->>SDET: 200 OK {reply: "You're welcome! Have a great day."}
+    Note over SDET: turns.append(Turn(role="assistant", content=reply))
+
+    Note over SDET,Eval: ConversationalTestCase(turns=turns)<br/>assert_test(test_case, [RoleAdherenceMetric()])
+```
+
+#### Production Test Driver Code:
+```python
+def test_live_chat_api_journey(chat_client):
+    session_id = chat_client.create_session()
+    user_journey = [
+        "Hi, I want to check my order status.",
+        "Order ID is #8812.",
+        "Thank you, that answers my question!"
+    ]
+    
+    recorded_turns = []
+    for user_prompt in user_journey:
+        # Record user turn
+        recorded_turns.append(Turn(role="user", content=user_prompt))
+        
+        # Call live API endpoint
+        response = chat_client.post("/api/chat", json={
+            "session_id": session_id,
+            "message": user_prompt
+        })
+        bot_reply = response.json()["response_text"]
+        
+        # Record assistant turn
+        recorded_turns.append(Turn(role="assistant", content=bot_reply))
+
+    test_case = ConversationalTestCase(
+        chatbot_role="You are a professional retail customer support agent.",
+        turns=recorded_turns
+    )
+    assert_test(test_case, [RoleAdherenceMetric(), ConversationCompletenessMetric()])
+```
+
+---
+
+### Pattern B: Production Session Store Adapter (Observability & Golden Datasets)
+When evaluating real conversations from production (e.g., historical user logs, angry customer escalations, or traces from **LangSmith**, **Arize Phoenix**, **OpenTelemetry**, or **DynamoDB/PostgreSQL**), you write an **adapter function** that normalizes foreign schemas into `Turn` objects:
+
+```python
+from typing import Dict, Any, List
+from deepeval.test_case import Turn, ConversationalTestCase
+
+def extract_turns_from_session_payload(raw_session: Dict[str, Any]) -> ConversationalTestCase:
+    """
+    Adapter function that converts raw database/observability logs into
+    a standard DeepEval ConversationalTestCase.
+    """
+    # Map foreign platform roles to DeepEval roles ('user' | 'assistant')
+    ROLE_MAPPING = {
+        "CUSTOMER": "user",
+        "USER": "user",
+        "HUMAN": "user",
+        "BOT": "assistant",
+        "AGENT": "assistant",
+        "AI": "assistant"
+    }
+
+    turns: List[Turn] = []
+    for msg in raw_session.get("conversation_history", []):
+        normalized_role = ROLE_MAPPING.get(msg["sender"].upper(), "assistant")
+        turns.append(Turn(
+            role=normalized_role,
+            content=msg["text"]
+        ))
+
+    return ConversationalTestCase(
+        chatbot_role=raw_session.get("system_persona", "Support Assistant"),
+        turns=turns
+    )
+```
+
+---
+
 ## 💡 SDET Best Practice Summary
 
 > [!TIP]
 > When automating conversational tests in CI/CD:
 > 1. Always specify `chatbot_role` explicitly in `ConversationalTestCase`. Without a target role, the judge cannot grade role adherence objectively.
 > 2. Test both positive resolution flows and negative boundary breaks (e.g. persona leakage, abandonment).
-> 3. Use `rate_limit_pacer` fixture to pace requests when running multi-turn evaluations against rate-limited judge endpoints.
+> 3. Use an Adapter layer (Pattern B) so your test framework is completely decoupled from your backend database or observability vendor's internal JSON format.
+> 4. Use `rate_limit_pacer` fixture to pace requests when running multi-turn evaluations against rate-limited judge endpoints.
+
