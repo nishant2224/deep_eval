@@ -21,3 +21,7 @@ __pycache__/
 # OS artifacts
 .DS_Store
 Thumbs.db
+
+# Private learning notes
+learning_notes/
+

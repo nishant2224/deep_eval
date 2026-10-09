@@ -26,21 +26,6 @@ This repository provides an enterprise-grade automated testing framework impleme
 
 ```
 deep-eval-project/
-├── learning_notes/                     # SDET architectural documentation & reference guides
-│   ├── QUICK_REVISION_CHEATSHEET.md    # ⚡ 5-min revision cheat sheet & SDET gotchas guide
-│   ├── METRICS_MASTER_REFERENCE.md     # 📊 Master catalog of all metrics & failure modes
-│   ├── 00_python_tooling_with_uv.md    # UV package manager guide & CLI cheatsheet
-│   ├── 01_mental_model_and_foundations.md # Deterministic vs. Probabilistic testing
-│   ├── 02_judge_configuration_and_framework_setup.md # Judge config & Windows gotchas
-│   ├── 03_rag_faithfulness_and_hallucination.md # Faithfulness & Hallucination
-│   ├── 04_rag_context_retrieval_triad.md        # Context Retrieval Triad
-│   ├── 05_custom_business_rubrics_with_geval.md # G-Eval Business Rubrics
-│   ├── 06_building_and_testing_live_rag_aut.md  # Live RAG Application Under Test
-│   ├── 07_llm_safety_guardrails_and_red_teaming.md # Safety, Bias & Red-Teaming
-│   ├── 08_conversational_and_agent_evaluation.md # Multi-Turn & Agent Evaluation
-│   ├── 09_synthetic_dataset_generation.md      # Synthetic Data & Benchmarks
-│   ├── 10_sdet_framework_and_cicd_quality_gates.md # CI/CD Quality Gates & Regressions
-│   └── 11_portfolio_packaging_and_resume_highlights.md # Portfolio & Resume Packaging
 ├── data/                               # 📦 Synthetic Datasets & Golden Benchmarks
 │   └── synthetic_goldens.json          # Synthesized ground-truth test cases
 ├── scripts/                            # ⚙️ Offline utility & generation scripts
@@ -121,10 +106,21 @@ uv run pytest
 
 ---
 
-## 💼 SDET Resume Highlights & Interview Talking Points
+## 💼 SDET Resume Highlights & Key Achievements
 
-Looking to showcase this framework on your resume or prepare for GenAI SDET interviews?
-Check out the **[Portfolio & Resume Guide](file:///d:/deep-eval-project/learning_notes/11_portfolio_packaging_and_resume_highlights.md)** for:
-* **5 battle-tested resume bullet points** covering RAG Triad automation, G-Eval business rubrics, adversarial red-teaming, and CI/CD quality gates.
-* **4-pillar interview narrative** for explaining deterministic vs. probabilistic evaluation, isolating retrieval from generation, and shift-left quality gates.
+* **Architected an enterprise-grade LLM-EvalOps testing framework** using **DeepEval**, **Pytest**, and **Astral UV**, replacing non-deterministic manual testing with automated **LLM-as-a-Judge** scoring across RAG and conversational AI pipelines.
+* **Automated RAG evaluation covering the complete RAG Triad** (Contextual Relevancy, Recall, and Precision) and generation factuality (Faithfulness and Hallucination), preventing hallucinations and ensuring $100\%$ grounding against enterprise knowledge bases.
+* **Engineered custom G-Eval business rubrics** (Empathy, Actionability) and **adversarial safety guardrails** (Toxicity, Bias, Prompt Injection / Jailbreak defense), establishing strict pass/fail quality gates that caught $100\%$ of simulated system-prompt leak attempts.
+* **Implemented multi-turn conversational testing harnesses** using `ConversationalTestCase` to validate `RoleAdherence` and `ConversationCompleteness`, eliminating context drift and detecting premature conversation abandonment in customer support workflows.
+* **Automated synthetic golden dataset generation** using DeepEval's `Synthesizer`, scaling test coverage across enterprise policies without manual curation, and integrated automated **Quality Gates into Jenkins CI pipelines** to block builds on metric regression.
+
+---
+
+## 🎙️ Key Interview Talking Points
+
+* **Deterministic vs. Probabilistic Testing**: Standard testing asserts exact strings (`assert actual == expected`). Generative AI testing asserts semantic properties (faithfulness, relevancy, bias) using an LLM-as-a-Judge with calibrated thresholds.
+* **Isolating Retrieval from Generation**: Decouples search bugs (low Contextual Precision/Recall in Vector DB) from generation bugs (LLM hallucinations/unfaithfulness) to accelerate root-cause triage.
+* **Adversarial Red-Teaming**: Evaluates beyond happy paths with jailbreak prompts, prompt leakage attacks, and edge-case guardrails.
+* **Shift-Left Quality Gates**: Data-driven regression testing via `@pytest.mark.parametrize` embedded into CI/CD pipelines to block degraded model versions before deployment.
+
 
