@@ -182,8 +182,18 @@ LLM Testing (Generative AI / RAG / Agents)
 ---
 
 ### Day 10: Portfolio Packaging & Resume Highlights
-* **Core Concept**: Integrating with Confident AI cloud telemetry dashboards and translating this framework into 5 high-impact SDET resume bullet points.
-* *(Future questions & notes from Day 10 will be appended here)*
+* **Confident AI Cloud Telemetry**: Connects DeepEval (`deepeval login`) to centralized cloud dashboards for regression diffs, token cost monitoring, and executive visibility.
+* **Top 5 Resume Power Bullets**:
+  1. *Architected enterprise LLM-EvalOps test automation using DeepEval, Pytest, and UV.*
+  2. *Automated RAG Triad evaluations (Precision, Recall, Relevancy) and generation grounding (Faithfulness, Hallucination).*
+  3. *Engineered custom G-Eval business rubrics and adversarial safety guardrails (Toxicity, Bias, Prompt Injections).*
+  4. *Automated multi-turn conversational evaluation (RoleAdherence, ConversationCompleteness).*
+  5. *Built synthetic dataset generation via Synthesizer and enforced CI/CD quality gates in Jenkins pipelines.*
+* **Interview Golden Narrative**:
+  * *Pillar 1*: Probabilistic semantic property evaluation vs. deterministic string equality.
+  * *Pillar 2*: Decoupling Retrieval bugs (chunking/vector DB) from Generation bugs (LLM hallucination).
+  * *Pillar 3*: Adversarial Red-Teaming (jailbreaks, prompt leaks) vs. standard happy paths.
+  * *Pillar 4*: Shift-left automated CI quality gates blocking regressions before production.
 
 ---
 

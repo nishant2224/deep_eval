@@ -39,7 +39,8 @@ deep-eval-project/
 │   ├── 07_llm_safety_guardrails_and_red_teaming.md # Day 6: Safety, Bias & Red-Teaming
 │   ├── 08_conversational_and_agent_evaluation.md # Day 7: Multi-Turn & Agent Evaluation
 │   ├── 09_synthetic_dataset_generation.md      # Day 8: Synthetic Data & Benchmarks
-│   └── 10_sdet_framework_and_cicd_quality_gates.md # Day 9: CI/CD Quality Gates & Regressions
+│   ├── 10_sdet_framework_and_cicd_quality_gates.md # Day 9: CI/CD Quality Gates & Regressions
+│   └── 11_portfolio_packaging_and_resume_highlights.md # Day 10: Portfolio & Resume Packaging
 ├── data/                               # 📦 Synthetic Datasets & Golden Benchmarks
 │   └── synthetic_goldens.json          # Synthesized ground-truth test cases
 ├── scripts/                            # ⚙️ Offline utility & generation scripts
@@ -115,4 +116,14 @@ uv run pytest
 - [x] **Day 7**: Conversational AI & Autonomous Agent Evaluation (Multi-turn Chat & Tool Call Trajectories)
 - [x] **Day 8**: Synthetic Golden Dataset Generation (`Synthesizer` from Knowledge Base)
 - [x] **Day 9**: SDET Test Automation Framework & CI/CD Quality Gates (Fixtures, Parametrization, Jenkins Pipelines)
-- [ ] **Day 10**: Portfolio Packaging, Confident AI Dashboards & Resume Highlights
+- [x] **Day 10**: Portfolio Packaging, Confident AI Dashboards & Resume Highlights
+
+---
+
+## 💼 SDET Resume Highlights & Interview Talking Points
+
+Looking to showcase this framework on your resume or prepare for GenAI SDET interviews?
+Check out the **[Day 10 Portfolio & Resume Guide](file:///d:/deep-eval-project/learning_notes/11_portfolio_packaging_and_resume_highlights.md)** for:
+* **5 battle-tested resume bullet points** covering RAG Triad automation, G-Eval business rubrics, adversarial red-teaming, and CI/CD quality gates.
+* **4-pillar interview narrative** for explaining deterministic vs. probabilistic evaluation, isolating retrieval from generation, and shift-left quality gates.
+
